@@ -68,34 +68,56 @@ struct ContentView: View {
     }
     
     var sliderStack: some View {
-        Group {
-            VStack {
-                Text("Red")
-                HStack {
-                    let roundedRedValue = Int(redSliderValue.rounded())
-                    Slider(value: $redSliderValue, in: 1.0...255.0)
-                    Text("\(roundedRedValue)")
-                }
-            }
-            VStack {
-                Text("Green")
-                HStack {
-                    let roundedGreenValue = Int(greenSliderValue.rounded())
-                    Slider(value: $greenSliderValue, in: 1.0...255.0)
-                    Text("\(roundedGreenValue)")
-                }
-            }
-            VStack {
-                Text("Blue")
-                HStack {
-                    let roundedBlueValue = Int(blueSliderValue.rounded())
-                    Slider(value: $blueSliderValue, in: 1.0...255.0)
-                    Text("\(roundedBlueValue)")
-                }
+        VStack {
+            colorSliderGenerator(
+                forColor: "Red",
+                value: redSliderValue,
+                sliderValue: $redSliderValue
+            )
+            colorSliderGenerator(
+                forColor: "Green",
+                value: greenSliderValue,
+                sliderValue: $greenSliderValue
+            )
+            colorSliderGenerator(
+                forColor: "Blue",
+                value: blueSliderValue,
+                sliderValue: $blueSliderValue
+            )
+        }
+    }
+    
+    /**
+    Creates a single Color Slider consisting of a label, a slider, and output of the current value encapsulated in a VStack.
+
+    - Parameters:
+        - forColor: A String that is used to label the slider
+        - value: A Double that is the current color value from 1.0 to 255.0
+        - sliderValue: A Bound Double that tracks the current slider value
+
+    - Returns: some View
+     */
+    func colorSliderGenerator(forColor label: String, value: Double, sliderValue: Binding<Double>) -> some View {
+        VStack {
+            Text("\(label)")
+            HStack {
+                let roundedRedValue = Int(value.rounded())
+                Slider(value: sliderValue, in: 1.0...255.0)
+                Text("\(roundedRedValue)")
             }
         }
     }
     
+    
+    
+    /**
+    Updates a dictionary that is used to store values for "red", "green", and "blue" that is used by the Color Visualizer.
+
+    - Parameters:
+        - red: A Double between 1.0 and 255.0 that indicates the level of red to pass to Color()
+        - green: A Double between 1.0 and 255.0 that indicates the level of green to pass to Color()
+        - blue: A Double between 1.0 and 255.0 that indicates the level of blue to pass to Color()
+     */
     func updateVisualizerValues(red: Double, green: Double, blue: Double) {
         visualizerValue.updateValue(red, forKey: "red")
         visualizerValue.updateValue(green, forKey: "green")
