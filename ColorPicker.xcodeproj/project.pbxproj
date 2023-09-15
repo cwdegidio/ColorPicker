@@ -11,6 +11,10 @@
 		E925E8832AA18B38009582CC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E925E8822AA18B38009582CC /* ContentView.swift */; };
 		E925E8852AA18B3A009582CC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E925E8842AA18B3A009582CC /* Assets.xcassets */; };
 		E925E8882AA18B3A009582CC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E925E8872AA18B3A009582CC /* Preview Assets.xcassets */; };
+		E925E8972AA4368E009582CC /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E925E8962AA4368E009582CC /* TitleView.swift */; };
+		E925E8992AA436E4009582CC /* ColorVisualizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E925E8982AA436E4009582CC /* ColorVisualizer.swift */; };
+		E925E89B2AA43D67009582CC /* SliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E925E89A2AA43D67009582CC /* SliderView.swift */; };
+		E925E89D2AA43E6A009582CC /* SetButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E925E89C2AA43E6A009582CC /* SetButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +23,10 @@
 		E925E8822AA18B38009582CC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E925E8842AA18B3A009582CC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E925E8872AA18B3A009582CC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		E925E8962AA4368E009582CC /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
+		E925E8982AA436E4009582CC /* ColorVisualizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorVisualizer.swift; sourceTree = "<group>"; };
+		E925E89A2AA43D67009582CC /* SliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderView.swift; sourceTree = "<group>"; };
+		E925E89C2AA43E6A009582CC /* SetButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,9 +59,8 @@
 		E925E87F2AA18B38009582CC /* ColorPicker */ = {
 			isa = PBXGroup;
 			children = (
-				E925E8802AA18B38009582CC /* ColorPickerApp.swift */,
-				E925E8822AA18B38009582CC /* ContentView.swift */,
-				E925E8842AA18B3A009582CC /* Assets.xcassets */,
+				E925E8952AA4363F009582CC /* App */,
+				E925E8942AA4361B009582CC /* Views */,
 				E925E8862AA18B3A009582CC /* Preview Content */,
 			);
 			path = ColorPicker;
@@ -65,6 +72,27 @@
 				E925E8872AA18B3A009582CC /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		E925E8942AA4361B009582CC /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E925E8822AA18B38009582CC /* ContentView.swift */,
+				E925E8962AA4368E009582CC /* TitleView.swift */,
+				E925E8982AA436E4009582CC /* ColorVisualizer.swift */,
+				E925E89A2AA43D67009582CC /* SliderView.swift */,
+				E925E89C2AA43E6A009582CC /* SetButton.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		E925E8952AA4363F009582CC /* App */ = {
+			isa = PBXGroup;
+			children = (
+				E925E8802AA18B38009582CC /* ColorPickerApp.swift */,
+				E925E8842AA18B3A009582CC /* Assets.xcassets */,
+			);
+			path = App;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,7 +166,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				E925E8832AA18B38009582CC /* ContentView.swift in Sources */,
+				E925E8992AA436E4009582CC /* ColorVisualizer.swift in Sources */,
 				E925E8812AA18B38009582CC /* ColorPickerApp.swift in Sources */,
+				E925E8972AA4368E009582CC /* TitleView.swift in Sources */,
+				E925E89D2AA43E6A009582CC /* SetButton.swift in Sources */,
+				E925E89B2AA43D67009582CC /* SliderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
