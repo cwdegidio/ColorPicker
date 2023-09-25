@@ -44,26 +44,27 @@ let avg3 = average(nums: arrayOfNums, numberOfElements: arrayOfNums.count)
 // part (b)
 
 enum Animal {
-    case dog, cat, mouse, horse, goat
+    // Because Brad requested more beholders... 😉
+    case beholder, illithid, owlbear, kobold, dragon
 }
 
 func theSoundMadeBy(_ animal: Animal) -> String {
     switch animal {
-    case .dog:
-        return "The dog says woof!"
-    case .cat:
-        return "The cat says meow!"
-    case .mouse:
-        return "The mouse says squeek!"
-    case .horse:
-        return "The horse says ney!"
-    case .goat:
-        return "The goat says ehehehe!"
+    case .beholder:
+        return "The beholder says GWARRR!!"
+    case .illithid:
+        return "The illithid says slobthol!"
+    case .owlbear:
+        return "The owlbear says hooo-grrrowl!"
+    case .kobold:
+        return "The kobold says squeeeee!"
+    case .dragon:
+        return "The dragon says ROOOOAAAAAR!"
     }
 }
 
-theSoundMadeBy(.goat)
-theSoundMadeBy(.mouse)
+theSoundMadeBy(.illithid)
+theSoundMadeBy(.dragon)
 
 // part (c)
 
