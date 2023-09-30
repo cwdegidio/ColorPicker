@@ -92,6 +92,7 @@ func commonElementsSet(from numsA: [Int], and numsB: [Int]) -> Set<Int> {
 print(commonElementsSet(from: numsBy2, and: numsBy4))
 
 
+
 // part (d)
 struct Square {
     let sideLength: Double
