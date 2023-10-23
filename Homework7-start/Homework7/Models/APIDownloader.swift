@@ -32,73 +32,65 @@
 
 import Foundation
 
-class APIStore: ObservableObject {
-  let apisURL =
-    URL(fileURLWithPath: "apilist", relativeTo: FileManager.documentsDirectoryURL)
-    .appendingPathExtension("json")
-  @Published var apis: APIs = APIs(count: 0, entries: [])
+@MainActor class APIDownloader: ObservableObject {
+  @Published var downloadLocation: URL?
+  @Published var apis = APIs(count: 0, entries: [])
   @Published var errorOccured = false
   
+  private let session: URLSession
+  private let sessionConfiguration: URLSessionConfiguration
+  
   init() {
-    print(apisURL)
-    readApiData()
+    self.sessionConfiguration = URLSessionConfiguration.default
+    self.session = URLSession(configuration: sessionConfiguration)
   }
   
-  func readApiData() {
-    if Bundle.main.path(forResource: "api-list", ofType: "json") != nil {
-      print("Bundle Data Present")
-      loadApiAppBundle()
-      saveApiJSON()
+  func downloadAPI(at url: URL) async {
+    guard let (downloadURL, res) = try? await session.download(from: url)
+    else {
+      errorOccured = true
       return
     }
     
-    if FileManager.default.fileExists(atPath: apisURL.path) {
-      print("Local Data Present")
-      loadApiLocalData()
+    guard let httpRes = res as? HTTPURLResponse,
+          httpRes.statusCode == 200
+    else {
+      errorOccured = true
       return
     }
-    
-    // Bundle or local data is missing
-    errorOccured = true
-  }
   
-  func loadApiFromUrl() {
-    
-  }
-  
-  func loadApiAppBundle() {
     let decoder = JSONDecoder()
+    do {
+      let data = try Data(contentsOf: downloadURL)
+      apis = try decoder.decode(APIs.self, from: data)
+    } catch {
+      errorOccured = true
+    }
     
-    if let path = Bundle.main.path(forResource: "apilist", ofType: "json") {
-      do {
-        let data = try Data(contentsOf: URL(fileURLWithPath: path))
-        apis = try decoder.decode(APIs.self, from: data)
-      } catch let error {
-        print(error)
+    let fileManager = FileManager.default
+    
+    guard let documentsPath = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
+    else {
+      errorOccured = true
+      return
+    }
+    print(documentsPath)
+    
+    let lastPathComponent = url.lastPathComponent
+    let destinationURL = documentsPath.appendingPathComponent(lastPathComponent).appendingPathExtension("json")
+    
+    do {
+      if fileManager.fileExists(atPath: destinationURL.path) {
+        try fileManager.removeItem(at: destinationURL)
       }
-    }
-  }
-  
-  func loadApiLocalData() {
-    let decoder = JSONDecoder()
-    
-    do {
-      let apiData = try Data(contentsOf: URL(fileURLWithPath: "apilist", relativeTo: FileManager.documentsDirectoryURL)
-        .appendingPathExtension("json"))
-      apis = try decoder.decode(APIs.self, from: apiData)
+      
+      try fileManager.copyItem(at: downloadURL, to: destinationURL)
+      
+      await MainActor.run {
+        downloadLocation = destinationURL
+      }
     } catch let error {
-      print(error)
-    }
-  }
-  
-  func saveApiJSON() {
-    let encoder = JSONEncoder()
-    encoder.outputFormatting = .prettyPrinted
-    
-    do {
-      let apiData = try encoder.encode(apis)
-      try apiData.write(to: apisURL, options: .atomic)
-    } catch let error {
+      errorOccured = true
       print(error)
     }
   }

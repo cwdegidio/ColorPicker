@@ -33,21 +33,32 @@
 import SwiftUI
 
 struct ContentView: View {
-  @ObservedObject var store = APIStore()
+  @ObservedObject private var apiDownloader = APIDownloader()
+  @State var apis = APIs(count: 0, entries: [])
   
   var body: some View {
-    if store.errorOccured {
-      Text("An error has occured. No data is available.")
-    } else {
-      NavigationView {
-        List {
-          ForEach(store.apis.entries) { data in
-            NavigationLink(destination: APIView(api: data)) {
-              Text(data.api)
+    VStack {
+      if $apis.entries.count != 0 && apiDownloader.errorOccured == false {
+        NavigationView {
+          List {
+            ForEach(apis.entries) { data in
+              NavigationLink(destination: APIView(api: data)) {
+                Text(data.api)
+              }
             }
           }
+          .navigationBarTitle("APIs")
         }
-        .navigationBarTitle("APIs")
+      } else if  apiDownloader.errorOccured == true {
+        Text("An error has occured. No data is available.")
+      } else {
+        Text("Waiting for data...")
+      }
+    }
+    .onAppear() {
+      Task {
+        await apiDownloader.downloadAPI(at: URL(string: "https://api.publicapis.org/entries")!)
+        apis = apiDownloader.apis
       }
     }
   }
